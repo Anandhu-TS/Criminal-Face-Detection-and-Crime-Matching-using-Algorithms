@@ -1,0 +1,70 @@
+{%extends 'station_index.html'%}
+{% load static %}
+{%block content%} 
+
+        <div class="container py-5">
+            <div class="row ">
+                <div class="col-xl-12">
+                    <div class="section-tittle section-tittle-f text-center mb-70">
+                        <h2>Staff List</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-5" style="padding-top: 0rem !important;">
+              <div class="col-lg-10 mx-auto" style="flex: 1 0 83.333333%; max-width: 100%" >
+                <div class="card rounded shadow border-0">
+                  <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                      <table id="example" style="width:100%" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                <th>D.O.B</th>
+                                <th>Designation</th>
+                                <th>Contact&nbspNo.</th>
+                                <th>Email</th>
+                                <th>Work&nbspHistory</th>
+                                <th>Status</th>
+                                <th>Promotion</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                            {% for j in staffview %}
+                            <tr>
+                              <td>{{j.name}}</td>
+                              <td>{{j.addr}}</td>
+                              <td>{{j.gender}}</td>
+                              <td>{{j.dob}}</td>
+                              <td>{{j.designation}}</td>
+                              <td>{{j.contact_no}}</td>
+                              <td>{{j.email}}</td>
+                              <td>{% if j.work_history%}<a href="{{j.work_history.url }}" download ><button class="genric-btn info"> Download </button></a>
+                                  {% else %}&nbsp
+                                  {% endif %}</td>
+                              <td>
+                                {% if j.approve is 0 %}<a href="{% url 'station_approve' j.pk %}" ><button class="genric-btn success"> Approve </button></a>
+                                {% else %}<a href="{% url 'station_reject' j.pk %}" ><button class="genric-btn danger"> &nbsp&nbspReject&nbsp&nbsp </button></a>
+                                {% endif %}
+                              </td>
+                              <td>
+                                {% if j.approve is 0 %}&nbsp
+                                {% else %}
+                                <a href="{% url 'station_staff_promotion' j.pk %}" ><button class="genric-btn primary"> Promote </button></a>
+                                {% endif %}
+                              </td>
+
+                            </tr>
+                            {% endfor %}
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+{%endblock%}
